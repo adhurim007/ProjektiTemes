@@ -1,0 +1,36 @@
+﻿@model StockManagement.Domain.Entities.Item
+
+<div class="container my-5">
+    <!-- Titulli -->
+    <h2 class="text-primary mb-4">Shto Artikull të Ri</h2>
+
+    <!-- Forma për shtimin e artikullit -->
+    <form asp-action="Create" method="post" class="p-4 border rounded shadow-sm bg-light">
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label"><strong>Emri i Artikullit</strong></label>
+            <input asp-for="Name" class="form-control" placeholder="Shkruani emrin e artikullit" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="StockQuantity" class="form-label"><strong>Sasia në Stok</strong></label>
+            <input asp-for="StockQuantity" class="form-control" placeholder="Shkruani sasinë në stok" />
+            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Price" class="form-label"><strong>Çmimi</strong></label>
+            <input asp-for="Price" class="form-control" placeholder="Shkruani çmimin e artikullit" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-primary">Shto Artikull</button>
+            <a asp-action="Index" class="btn btn-secondary">Anulo</a>
+        </div>
+    </form>
+</div>
+
+<footer class="text-center mt-5">
+    <p>&copy; 2024 Sistemi i menaxhimit të porosive</p>
+</footer>

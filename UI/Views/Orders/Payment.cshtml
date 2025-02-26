@@ -1,0 +1,40 @@
+﻿<h1>Pay with Stripe</h1>
+<form id="payment-form" method="post" action="/Orders/ProcessPayment">
+    <div id="card-element">
+        <!-- Stripe.js will insert the card input fields here -->
+    </div>
+    <input type="hidden" name="OrderId" id="OrderId" value="@Model.OrderId" />
+    <button type="submit">Submit Payment</button>
+    <div id="card-errors" role="alert"></div>
+</form>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("pk_test_51QZCZVCohHSg2r85Z576vCkqMSK3hRvFat0he8d1TD71k3VvE9itjsS6fUYUL7pyAIlSHaGwUsO9UkGTUOCIpwkS00yq1XScXi"); // Replace with your Stripe Publishable Key
+    const elements = stripe.elements();
+
+    // Create an instance of the card Element
+    const card = elements.create("card");
+    card.mount("#card-element");
+
+    const form = document.getElementById("payment-form");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const { token, error } = await stripe.createToken(card);
+
+        if (error) {
+            // Display error in #card-errors
+            const errorElement = document.getElementById("card-errors");
+            errorElement.textContent = error.message;
+        } else {
+            // Insert the token into the form and submit
+            const hiddenInput = document.createElement("input");
+            hiddenInput.setAttribute("type", "hidden");
+            hiddenInput.setAttribute("name", "stripeToken");
+            hiddenInput.setAttribute("value", token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
+        }
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿@model StockManagement.Domain.Entities.Item
+
+<div class="container my-5">
+    <!-- Titulli -->
+    <h2 class="text-primary mb-4">Redakto Artikullin</h2>
+    <p class="text-muted">Plotësoni të dhënat e mëposhtme për të përditësuar artikullin.</p>
+
+    <!-- Forma për redaktim -->
+    <form asp-action="Edit" method="post" class="p-4 border rounded shadow-sm bg-light">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold">Emri i Artikullit</label>
+            <input asp-for="Name" class="form-control" placeholder="Shkruani emrin e artikullit" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="StockQuantity" class="form-label fw-bold">Sasia në Stok</label>
+            <input asp-for="StockQuantity" class="form-control" placeholder="Vendosni sasinë në stok" />
+            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label fw-bold">Çmimi</label>
+            <input asp-for="Price" class="form-control" placeholder="Vendosni çmimin e artikullit" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <!-- Butonat për veprim -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary px-4">Ruaj Ndryshimet</button>
+            <a asp-action="Index" class="btn btn-secondary px-4">Anulo</a>
+        </div>
+    </form>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Sistemi i menaxhimit të porosive</p>
+    </footer>
+</div>

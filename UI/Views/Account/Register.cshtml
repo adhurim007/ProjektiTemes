@@ -1,0 +1,54 @@
+﻿@model OrderManagementSystem.UI.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Regjistrimi i Përdoruesit";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Regjistrimi i Përdoruesit</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Shkruani email-in" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Fjalëkalimi</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Shkruani fjalëkalimin" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Konfirmo Fjalëkalimin</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Konfirmoni fjalëkalimin" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SelectedRole" class="form-label">Roli</label>
+                            <select asp-for="SelectedRole" asp-items="@(new SelectList(Model.Roles))" class="form-select">
+                                <option value="">-- Zgjidh Rolin --</option>
+                            </select>
+                            <span asp-validation-for="SelectedRole" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Regjistro</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

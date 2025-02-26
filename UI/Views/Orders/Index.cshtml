@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OrderManagement.Domain.Models.Order>
+
+<div class="container my-5">
+    <!-- Titulli dhe butoni për shtimin e porosive -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Menaxhimi i Porosive</h1>
+        <a class="btn btn-success" asp-action="Create">Regjistro Porosi</a>
+    </div>
+
+    <!-- Tabela e porosive -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Numri i Porosisë</th>
+                    <th>Shuma Totale</th>
+                    <th>Statusi</th>
+                    <th>Veprime</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.TotalAmount.ToString("C")</td>
+                        <td>
+                            <span class="badge @(order.Status == "Pending" ? "bg-warning text-dark" : "bg-success")">
+                                @order.Status
+                            </span>
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@order.Id">Detajet</a>
+                            @if (order.Status == "Pending")
+                            {
+                                <a class="btn btn-primary btn-sm" asp-action="Payment" asp-route-orderId="@order.Id" asp-route-totalAmount="@order.TotalAmount">
+                                    Paguaj
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4">
+        <p>&copy; 2024 Sistemi i menaxhimit të porosive</p>
+    </footer>
+</div>

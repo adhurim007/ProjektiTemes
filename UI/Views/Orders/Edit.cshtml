@@ -1,0 +1,23 @@
+﻿@model OrderManagement.Domain.Models.Order
+
+<h1>Edit Order</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label for="TotalAmount">Total Amount</label>
+        <input type="number" asp-for="TotalAmount" class="form-control" />
+        <span asp-validation-for="TotalAmount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Status">Status</label>
+       @*  <select asp-for="Status" class="form-control">
+            <option value="Pending" @(Model.Status == "Pending" ? "selected" : "")>Pending</option>
+            <option value="Completed" @(Model.Status == "Completed" ? "selected" : "")>Completed</option>
+            <option value="Cancelled" @(Model.Status == "Cancelled" ? "selected" : "")>Cancelled</option>
+        </select> *@
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

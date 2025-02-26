@@ -1,0 +1,52 @@
+﻿@model OrderManagement.Domain.Models.Order
+
+<div class="container my-5">
+    <!-- Titulli -->
+    <h2 class="text-primary">Detajet e Porosisë</h2>
+    <hr />
+
+    <!-- Informacioni i Përgjithshëm i Porosisë -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h5><strong>Numri i Porosisë:</strong> @Model.Id</h5>
+            <h5><strong>Shuma Totale:</strong> @Model.TotalAmount.ToString("C")</h5>
+            <h5>
+                <strong>Statusi:</strong>
+                <span class="badge @(Model.Status == "Pending" ? "bg-warning text-dark" : "bg-success")">
+                    @Model.Status
+                </span>
+            </h5>
+        </div>
+    </div>
+
+    <!-- Artikujt në Porosi -->
+    <h4 class="text-secondary mt-4">Artikujt në këtë Porosi</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Emri i Artikullit</th>
+                    <th>Sasia</th>
+                    <th>Çmimi</th>
+                    <th>Totali</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@(item.Quantity * item.Price)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Butoni për kthim -->
+    <div class="mt-4">
+        <a class="btn btn-secondary" asp-action="Index">Kthehu te Lista</a>
+    </div>
+</div>

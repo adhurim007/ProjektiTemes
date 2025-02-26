@@ -1,0 +1,19 @@
+﻿@model OrderManagement.Domain.Models.Order
+
+<h1>Delete Order</h1>
+
+<p>Are you sure you want to delete this order?</p>
+<div class="form-group">
+    <label>Total Amount:</label>
+    <p>@Model.TotalAmount</p>
+</div>
+<div class="form-group">
+    <label>Status:</label>
+    <p>@Model.Status</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

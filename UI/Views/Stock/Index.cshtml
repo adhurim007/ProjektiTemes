@@ -1,0 +1,59 @@
+﻿@model IEnumerable<StockManagement.Domain.Entities.Item>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Menaxhimi i Stokut</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <h2 class="text-secondary">Artikujt në Stok</h2>
+        <a asp-action="Create" class="btn btn-success">Shto artikull të ri</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Emri</th>
+                    <th>Sasia</th>
+                    <th>Çmimi</th>
+                    <th class="text-center">Veprime</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.StockQuantity</td>
+                        <td>@item.Price</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm me-2">
+                                Ndrysho
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                Fshij
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
