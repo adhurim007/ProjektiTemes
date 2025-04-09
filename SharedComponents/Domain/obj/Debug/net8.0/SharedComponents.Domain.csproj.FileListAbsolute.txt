@@ -165,3 +165,4 @@ C:\github\OrderManagmentSystem\SharedComponents\Domain\bin\Debug\net8.0\runtimes
 C:\github\OrderManagmentSystem\SharedComponents\Domain\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\github\OrderManagmentSystem\SharedComponents\Domain\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\github\OrderManagmentSystem\SharedComponents\Domain\obj\Debug\net8.0\SharedComponents.Domain.genruntimeconfig.cache
+C:\github\OrderManagmentSystem\SharedComponents\Domain\obj\Debug\net8.0\SharedComponents.Domain.sourcelink.json
