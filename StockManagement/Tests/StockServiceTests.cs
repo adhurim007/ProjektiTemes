@@ -2,6 +2,8 @@
 using Moq;
 using StockManagement.Domain.Entities;
 using SharedComponents.Domain.Interfaces;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace StockManagement.Tests
 {
@@ -14,30 +16,31 @@ namespace StockManagement.Tests
             _mockStockService = new Mock<IStockService>();
         }
 
-        //[Fact]
-        //public void AddStock_ValidStock_AddsSuccessfully()
-        //{
-        //    // Arrange
-        //    var stock = new Item
-        //    {
-        //        Id = 1,
-        //        Name = "Laptop",
-        //        StockQuantity = 10,
-        //        Price = 1000
-        //    };
-        //    _mockStockService.Setup(service => service.AddStock(stock)).Returns(true);
+        [Fact]
+        public async Task AddStock_ValidStock_AddsSuccessfully()
+        {
+            var stockItem = new Item
+            {
+                Id = 1,
+                Name = "Laptop",
+                StockQuantity = 10,
+                Price = 1000
+            };
 
-        //    // Act
-        //    var result = _mockStockService.Object.AddStock(stock);
+            _mockStockService.Setup(service => service.AddStock(stockItem))
+                             .ReturnsAsync(true);
 
-        //    // Assert
-        //    Assert.True(result);
-        //}
+            
+            var result = await _mockStockService.Object.AddStock(stockItem);
+
+            
+            Assert.True(result);
+        }
 
         [Fact]
         public async Task UpdateItemAsync_ValidItem_UpdatesSuccessfully()
         {
-            // Arrange
+          
             var item = new Item
             {
                 Id = 1,
@@ -46,27 +49,26 @@ namespace StockManagement.Tests
                 Price = 1000
             };
 
-            _mockStockService.Setup(service => service.UpdateItemAsync(item)).Returns(Task.CompletedTask);
+            _mockStockService.Setup(service => service.UpdateItemAsync(item))
+                             .Returns(Task.CompletedTask);
 
-            // Act
+          
             await _mockStockService.Object.UpdateItemAsync(item);
 
-            // Assert
+           
             _mockStockService.Verify(service => service.UpdateItemAsync(item), Times.Once);
         }
 
-
         [Fact]
-        public async Task RemoveStock_InvalidStock_ThrowsException()
+        public async Task ReduceStockAsync_InvalidStock_ThrowsException()
         {
-            // Arrange
+          
             _mockStockService.Setup(service => service.ReduceStockAsync(It.IsAny<int>(), It.IsAny<int>()))
-                .ThrowsAsync(new KeyNotFoundException());
+                             .ThrowsAsync(new KeyNotFoundException());
 
-            // Act & Assert
+         
             await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
                 await _mockStockService.Object.ReduceStockAsync(999, 1));
         }
-
     }
 }

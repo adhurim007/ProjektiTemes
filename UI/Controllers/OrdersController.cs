@@ -32,19 +32,19 @@ namespace OrderManagementSystem.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            // Merr ID-në e përdoruesit aktual
+         
             var businessId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(businessId))
             {
-                return Unauthorized(); // Nëse nuk ka përdorues të autentikuar, kthe përgjigje 401
+                return Unauthorized(); 
             }
 
             var stockItems = await _stockService.GetAllItemsAsync();
 
             var viewModel = new CreateOrderViewModel
             {
-                BusinessId = businessId, // Vendos ID-në e biznesit
+                BusinessId = businessId, 
                 Items = stockItems.Select(i => new ItemViewModel
                 {
                     Id = i.Id,
@@ -77,14 +77,14 @@ namespace OrderManagementSystem.UI.Controllers
 
             try
             {
-                // Kontrolloni nëse BusinessId është null
+              
                 if (string.IsNullOrEmpty(viewModel.BusinessId))
                 {
                     ModelState.AddModelError("", "Business ID is required.");
                     return View(viewModel);
                 }
 
-                // Krijo një porosi të re
+              
                 var order = new Order
                 {
                     BusinessId = viewModel.BusinessId,
@@ -129,7 +129,7 @@ namespace OrderManagementSystem.UI.Controllers
                 TotalAmount = totalAmount
             };
 
-            return View(viewModel); // Return the Payment view with the required data
+            return View(viewModel);  
         }
 
         [HttpPost]
@@ -137,14 +137,14 @@ namespace OrderManagementSystem.UI.Controllers
         {
             try
             {
-                // Retrieve the order
+                
                 var order = await _orderService.GetOrderWithItemsAsync(orderId);
                 if (order == null)
                 {
                     return NotFound("Order not found.");
                 }
 
-                // Use Stripe API to process payment
+               
                 var options = new ChargeCreateOptions
                 {
                     Amount = (long)(order.TotalAmount * 100), // Amount in cents
@@ -156,30 +156,29 @@ namespace OrderManagementSystem.UI.Controllers
                 var service = new ChargeService();
                 Charge charge = await service.CreateAsync(options);
 
-                // Check if the payment was successful
+                
                 if (charge.Status == "succeeded")
                 {
-                    // Update order status to "Active"
+                   
                     order.Status = "Active";
                     await _orderService.UpdateOrderAsync(order);
 
-                    // Reduce stock in the Items table
+                   
                     foreach (var orderItem in order.OrderItems)
                     {
-                        // Fetch the corresponding item from the Items table
+                      
                         var item = await _stockService.GetItemByIdAsync(orderItem.ItemId);
                         if (item != null)
                         {
-                            // Update stock quantity
+                           
                             item.StockQuantity -= orderItem.Quantity;
 
-                            // Ensure stock quantity is not negative
+                          
                             if (item.StockQuantity < 0)
                             {
                                 item.StockQuantity = 0;
                             }
-
-                            // Update the item in the Items table
+ 
                             await _stockService.UpdateItemAsync(item);
                         }
                         else

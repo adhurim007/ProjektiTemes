@@ -16,7 +16,7 @@ namespace OrderManagement.Infrastructure.Repositories
         public async Task<Order> GetByIdAsync(int id)
         {
             return await _context.Orders
-                .Include(o => o.OrderItems) // OrderItems gjithashtu vjen nga Entities
+                .Include(o => o.OrderItems) 
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
          

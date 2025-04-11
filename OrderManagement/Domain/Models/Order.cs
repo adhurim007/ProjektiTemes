@@ -18,4 +18,6 @@ public partial class Order
     public virtual AspNetUser Business { get; set; } = null!;
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+
 }

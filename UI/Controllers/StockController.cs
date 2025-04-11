@@ -8,7 +8,7 @@ namespace OrderManagementSystem.UI.Controllers
     public class StockController : Controller
     {
         private readonly IItemService _itemService;
-        //testttt
+        
         public StockController(IItemService itemService)
         {
             _itemService = itemService;
